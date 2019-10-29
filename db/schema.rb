@@ -12,9 +12,12 @@
 
 ActiveRecord::Schema.define(version: 2019_10_03_203509) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "car_parts", force: :cascade do |t|
-    t.integer "car_id"
-    t.integer "part_id"
+    t.bigint "car_id"
+    t.bigint "part_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["car_id"], name: "index_car_parts_on_car_id"
@@ -25,7 +28,7 @@ ActiveRecord::Schema.define(version: 2019_10_03_203509) do
     t.string "car_make"
     t.string "car_model"
     t.string "vin_number"
-    t.integer "make_id"
+    t.bigint "make_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["make_id"], name: "index_cars_on_make_id"
@@ -44,4 +47,7 @@ ActiveRecord::Schema.define(version: 2019_10_03_203509) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "car_parts", "cars"
+  add_foreign_key "car_parts", "parts"
+  add_foreign_key "cars", "makes"
 end
